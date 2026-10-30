@@ -1,0 +1,11 @@
+# Konfigurasi & Kredensial Pribadi
+.scriptai.conf
+*.conf
+*.key
+*.token
+
+# Log & Output hasil pengetesan
+model_aktif.txt
+laporan_test_model.txt
+*.log
+*.tmp
