@@ -91,18 +91,13 @@ clean_url() {
     echo "$url"
 }
 
-# Sensor tampilan token
+# Tampilkan token apa adanya (tanpa sensor)
 mask_token() {
     local token="$1"
-    local len=${#token}
     if [ -z "$token" ]; then
         echo "(belum diisi)"
-    elif [ "$len" -le 8 ]; then
-        echo "********"
     else
-        local prefix="${token:0:4}"
-        local suffix="${token: -4}"
-        echo "${prefix}****${suffix}"
+        echo "$token"
     fi
 }
 

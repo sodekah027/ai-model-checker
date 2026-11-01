@@ -13,7 +13,7 @@ Script Bash interaktif yang mudah dan cepat untuk memvalidasi dan menguji daftar
 - **Penyimpanan Hasil Otomatis**:
   - `model_aktif.txt`: Daftar ID model yang sukses merespon (1 baris per model, siap disalin).
   - `laporan_test_model.txt`: Laporan detail pengujian beserta durasi dan pesan balasan.
-- **Simpan Konfigurasi Aman**: Menyimpan Base URL & Token secara lokal di `~/.scriptai.conf` (disensor di tampilan menu dan diabaikan dari Git).
+- **Simpan Konfigurasi Otomatis**: Menyimpan Base URL & Token secara lokal di `~/.scriptai.conf` (ditampilkan penuh di menu dan diabaikan dari Git).
 - **Kompatibel Universal**: Berjalan mulus di Termux (Android), Linux (Ubuntu/Debian/Arch/CentOS), dan macOS.
 
 ---
@@ -67,7 +67,7 @@ sudo apt update && sudo apt install curl jq -y
         AI MODEL TESTER & CHECKER (Bash Script)         
 ========================================================
  Base URL  : https://api.openai.com/v1
- Token/Key : sk-p****1234
+ Token/Key : sk-proj-abcdef1234567890
  Pesan Tes : "hai"
 ========================================================
  [1] Mulai Test Semua Model (Auto Base URL -> Token -> Test)
