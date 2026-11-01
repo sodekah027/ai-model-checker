@@ -7,5 +7,6 @@
 # Log & Output hasil pengetesan
 model_aktif.txt
 laporan_test_model.txt
+riwayat_test.txt
 *.log
 *.tmp

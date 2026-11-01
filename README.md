@@ -13,6 +13,7 @@ Script Bash interaktif yang mudah dan cepat untuk memvalidasi dan menguji daftar
 - **Penyimpanan Hasil Otomatis**:
   - `model_aktif.txt`: Daftar ID model yang sukses merespon (1 baris per model, siap disalin).
   - `laporan_test_model.txt`: Laporan detail pengujian beserta durasi dan pesan balasan.
+  - `riwayat_test.txt`: Riwayat **semua provider** per-run (ditambahkan, tidak ditimpa) — berisi WAKTU + BASE URL + TOKEN + daftar model yang werk. Cocok jika Anda sering mengecek banyak provider berbeda.
 - **Simpan Konfigurasi Otomatis**: Menyimpan Base URL & Token secara lokal di `~/.scriptai.conf` (ditampilkan penuh di menu dan diabaikan dari Git).
 - **Kompatibel Universal**: Berjalan mulus di Termux (Android), Linux (Ubuntu/Debian/Arch/CentOS), dan macOS.
 
@@ -77,6 +78,7 @@ sudo apt update && sudo apt install curl jq -y
  [5] Atur Pesan Chat Test (Default: "hai")
  [6] Lihat Daftar Model Saja (Tanpa Chat)
  [7] Lihat Daftar Model yang Sukses Sebelumnya
+ [8] Lihat Riwayat Semua Provider (Base URL + Token + Model Work)
  [0] Keluar
 ========================================================
 ```

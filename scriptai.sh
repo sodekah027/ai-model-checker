@@ -31,6 +31,7 @@ NC='\033[0m' # No Color
 CONFIG_FILE="${HOME}/.scriptai.conf"
 OUT_SUCCESS="model_aktif.txt"
 OUT_REPORT="laporan_test_model.txt"
+OUT_HISTORY="riwayat_test.txt"
 
 # Default Variabel
 BASE_URL=""
@@ -432,6 +433,23 @@ run_model_test() {
 
     trap - INT
 
+    # Simpan riwayat per-run (append, tidak menimpa riwayat provider lain)
+    {
+        echo ""
+        echo "========================================================="
+        echo "WAKTU          : $(date '+%d-%m-%Y %H:%M:%S')"
+        echo "BASE URL       : $BASE_URL"
+        echo "TOKEN          : $API_KEY"
+        echo "HASIL          : $count_success sukses / $count_failed gagal"
+        if [ "$count_success" -gt 0 ]; then
+            echo "MODEL WORK     :"
+            sed 's/^/  - /' "$OUT_SUCCESS"
+        else
+            echo "MODEL WORK     : (tidak ada)"
+        fi
+        echo "========================================================="
+    } >> "$OUT_HISTORY"
+
     echo -e "--------------------------------------------------------------------------------"
     echo -e "${BOLD}${CYAN}=== RINGKASAN HASIL PENGUJIAN ===${NC}"
     echo -e "Total Dites    : ${BOLD}$((count_success + count_failed))${NC}"
@@ -439,6 +457,7 @@ run_model_test() {
     echo -e "Gagal          : ${RED}${BOLD}$count_failed${NC}"
     echo -e "Model Aktif    : Disimpan ke file ${YELLOW}$OUT_SUCCESS${NC}"
     echo -e "Laporan Detail : Disimpan ke file ${YELLOW}$OUT_REPORT${NC}"
+    echo -e "Riwayat Semua Provider : Disimpan ke file ${YELLOW}$OUT_HISTORY${NC}"
     echo -e "--------------------------------------------------------------------------------"
     read -r -p "Tekan [Enter] untuk kembali ke menu utama..."
 }
@@ -534,6 +553,20 @@ view_saved_success() {
     read -r -p "Tekan [Enter] untuk kembali..."
 }
 
+# Menu Lihat Riwayat Semua Provider
+view_history() {
+    if [ ! -f "$OUT_HISTORY" ] || [ ! -s "$OUT_HISTORY" ]; then
+        echo -e "\n${YELLOW}[!] Belum ada riwayat. Jalankan test model terlebih dahulu.${NC}"
+    else
+        echo -e "\n${GREEN}${BOLD}Riwayat Pengetesan Semua Provider:${NC}"
+        echo -e "--------------------------------------------------------"
+        cat "$OUT_HISTORY"
+        echo -e "--------------------------------------------------------"
+        echo -e "File riwayat: ${YELLOW}$OUT_HISTORY${NC}"
+    fi
+    read -r -p "Tekan [Enter] untuk kembali..."
+}
+
 # Tampilan Menu Utama
 main_menu() {
     check_dependencies
@@ -564,9 +597,10 @@ main_menu() {
         echo -e " [5] Atur Pesan Chat Test (Default: \"$TEST_MSG\")"
         echo -e " [6] Lihat Daftar Model Saja (Tanpa Chat)"
         echo -e " [7] Lihat Daftar Model yang Sukses Sebelumnya"
+        echo -e " [8] Lihat Riwayat Semua Provider (Base URL + Token + Model Work)"
         echo -e " [0] Keluar"
         echo -e "${BOLD}${CYAN}========================================================${NC}"
-        read -r -p "Pilih menu [0-7]: " choice
+        read -r -p "Pilih menu [0-8]: " choice
 
         case "$choice" in
             1) run_model_test ;;
@@ -576,6 +610,7 @@ main_menu() {
             5) input_test_msg; read -r -p "Tekan [Enter] untuk melanjutkan..." ;;
             6) view_model_list_only ;;
             7) view_saved_success ;;
+            8) view_history ;;
             0|q|Q)
                 echo -e "\n${GREEN}Selesai. Terima kasih!${NC}\n"
                 exit 0
